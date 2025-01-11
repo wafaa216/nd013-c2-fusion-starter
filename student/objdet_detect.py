@@ -40,7 +40,8 @@ def load_configs_model(model_name='darknet', configs=None):
     # get parent directory of this file to enable relative paths
     curr_path = os.path.dirname(os.path.realpath(__file__))
     parent_path = configs.model_path = os.path.abspath(os.path.join(curr_path, os.pardir))    
-    
+    print("Parent Path:", parent_path)
+
     # set parameters according to model type
     if model_name == "darknet":
         configs.model_path = os.path.join(parent_path, 'tools', 'objdet_models', 'darknet')

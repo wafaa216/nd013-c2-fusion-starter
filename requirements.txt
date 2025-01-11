@@ -1,11 +1,13 @@
-numpy
-opencv-python
-protobuf
+numpy==1.24.3
+opencv-python>=4.10.0
+protobuf==3.20.3
 easydict
-pytorch
+# pytorch
+torch
 pillow
 matplotlib
-wxpython
+wxpython==4.2.2
 shapely
 tqdm
 open3d
+
