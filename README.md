@@ -139,11 +139,20 @@ Parts of this project are based on the following repositories:
 
 ## 3D Object Detection Project Write up
 
-### Visualize range image channels (ID_S1_EX1)
+### 1- Visualize range image channels (ID_S1_EX1)
 
 <img src="img/ID_S1_EX1.png"/>
 
-Visualize lidar point-cloud (ID_S1_EX2)
+### 2- Visualize lidar point-cloud (ID_S1_EX2)
+
+I inspected lidar point clouds from several viewpoints.
+
+* Vehicles appear as dense clusters of points with distinguishable rectangular shapes.
+* Examples include cars in front, adjacent lanes, and further down the road.
+* Stable features:
+  * **Rear bumper** : often a sharp edge visible in the point cloud.
+  * **Roofline** : flat and consistent across vehicles.
+  * **Taillights/headlights** : highly reflective spots in the intensity channel.
 
 <img src="img/ID_S1_EX2_1.png"/>
 
@@ -151,17 +160,61 @@ Visualize lidar point-cloud (ID_S1_EX2)
 
 <img src="img/ID_S1_EX2_3.png"/>
 
-| **Example** | **Visibility Level**       | **Stable Features**                                     |
-| ----------------- | -------------------------------- | ------------------------------------------------------------- |
-| 1                 | Close-range, fully visible       | Clear roof line, strong intensity on the front and rear edges |
-| 2                 | Medium-range, partially visible  | Side edges and roof line are still discernible                |
-| 3                 | Far-range, partially visible     | Roof and front corners visible, weaker intensity              |
-| 4                 | Close-range, occluded by objects | Clear roof, some edges blocked by surrounding objects         |
-| 5                 | Partially visible truck          | Flatbed visible as a rectangular outline                      |
+### 3- BEV (Bird’s-Eye View) Mapping
 
-**Roof Line:** Visible across most examples.
-**Edges and Corners:** Front and rear edges are well-defined.
+#### Convert sensor coordinates to BEV-map coordinates (ID_S2_EX1)
 
-## License
+* Each lidar point is discretized into BEV pixels.
+* This allows consistent mapping between metric space and BEV image space.
+
+<img src="img/ID_S2_EX1.png"/>
+
+#### Compute intensity layer of BEV (ID_S2_EX2)
+
+* High reflectivity values highlight vehicle surfaces (metal, glass).
+* Background road has low reflectivity.
+* 
+  <img src="img/ID_S2_EX2.png"/>
+
+
+#### Compute height layer of BEV (ID_S2_EX3)
+
+* Height map separates taller vehicles (SUVs, trucks) from cars.
+* Ground points are normalized and subtracted.
+* 
+  <img src="img/ID_S2_EX3.png"/>
+
+#### 4- Extract 3D Bounding Boxes (ID_S3_EX2)
+
+* Converted detection outputs from BEV space to metric space.
+* Verified that cars were detected correctly.
+
+  <img src="img/ID_S3_EX2.png"/>
+
+### 5-Compute Performance Evaluation (ID_S4_EX3)
+
+* **Precision:** 0.94
+* **Recall:** 0.95
+* Distribution of IoUs and position errors:
+
+  <img src="img/ID_S4_EX3.png"/>
+    
+  <img src="img/s4_ex3.png"/>
+
+**GT
+
+  <img src="img/gt1.png"/>
+
+  <img src="img/gt2.png"/>
+
+
+## Conclusion
+
+* Vehicles are consistently detectable in lidar point clouds.
+* Stable features include  **rear bumpers, rooflines, and taillights** .
+* BEV representation improves clarity for detection models.
+* Final metrics show strong detection performance with high recall and precision.
+
+6. License
 
 [License](LICENSE.md)
